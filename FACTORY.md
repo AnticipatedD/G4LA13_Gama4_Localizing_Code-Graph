@@ -1,8 +1,8 @@
-# FACTORY.md — AnticipatedD/G4LA13_Gala4_Localizing_Code-Graph
+# FACTORY.md -G4LA13_Gala4_Localizing_Code-Graph
 
 ## 🎯 Purpose
 This document describes the **Band Agentic Mesh** behind our submission.  
-It explains how the factory operates, the mandates of each seat, and how resilience is achieved across all four stages of the Pocketful track.
+It explains how the factory operates, the mandates of each seat, and how resilience is achieved across all four stages.
 
 ---
 
@@ -11,13 +11,12 @@ It explains how the factory operates, the mandates of each seat, and how resilie
 ### Architect
 - Reads the spec and fixtures.  
 - Produces **generic mandates** that apply across tracks.  
-- Maintains the backlog: what endpoints and invariants must be added at each stage.  
+- Maintains the backlog: endpoints and invariants per stage.  
 - Ensures no stage breaks earlier contracts.  
 
 ### Builder
 - Implements endpoints stage by stage (`/me`, `/payments`, `/requests`, `/statement`, `/refunds`, `/correction-batches`).  
 - Containerizes each stage with no outbound network.  
-- Uses brand identity in repo paths (`anticipatedd_gala4/stage-1/app.py`).  
 - Enforces validation, balances, idempotency, and conservation of funds.  
 
 ### Reviewer
@@ -34,8 +33,6 @@ It explains how the factory operates, the mandates of each seat, and how resilie
 - **Retry**: Builder implements fixes and re‑runs harness.  
 - **Resilience**: Mesh iterates until all stage tests pass.  
 
-This cycle ensures robustness under the harness and prevents phantom failures.
-
 ---
 
 ## 📂 Stage Progression
@@ -48,11 +45,29 @@ Each stage folder contains a complete service that passes its stage’s suite.
 
 ---
 
-## 💰 Costs & Rationale
-- **Development cost**: Time spent wiring endpoints and enforcing invariants.  
-- **Resilience cost**: Reviewer cycles add overhead but guarantee correctness.  
-- **Benefit**: Judges see a factory that is structured, resilient, and reusable.  
-- **Identity**: The brand name *AnticipatedD/G4LA13_Gala4_Localizing_Code-Graph* signals originality and research‑grade ambition.  
+## 💬 Messaging & Room Tools
+Agents coordinate through Band’s always‑on tools:
+- `band_send_message` → Architect hands backlog items to Builder.  
+- `band_send_event` → Reviewer posts validation results.  
+- `band_add_participant / band_remove_participant` → Architect recruits/removes agents.  
+- `band_get_participants` → Builder checks active peers.  
+- `band_lookup_peers` → Reviewer searches for resilience helpers.  
+- `band_create_chatroom` → Architect spins up private sub‑rooms.  
+
+Contact management tools (`band_list_contacts`, `band_add_contact`, etc.) are used for cross‑account collaboration.
+
+---
+
+## 🌐 Band API Surfaces
+- **Agent API (`/api/v1/agent`)** → Used by agents to validate identity, recruit peers, join chats, send messages, and post events.  
+- **Human API (`/api/v1/me`)** → Powers the Band.ai dashboard; not used in hackathon.  
+
+Key behaviors: mention‑scoped visibility, messages vs. events, peers vs. participants, reconnect‑safe history.
+
+---
+
+## 📚 Additional Resources
+See README.md for full resource list (docs, APIs, SDKs, community links).
 
 ---
 
@@ -65,4 +80,4 @@ Each stage folder contains a complete service that passes its stage’s suite.
 
 ---
 
-Built with ❤️ by **AnticipatedD/G4LA13_Gala4_Localizing_Code-Graph**
+Built with ❤️ by **AnticipatedD/G4LA13_Gala4_Localizing_Code-Graph (G4LA13)**
